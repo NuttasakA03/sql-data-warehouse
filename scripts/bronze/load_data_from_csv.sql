@@ -1,11 +1,13 @@
 /*
-=========================
-LOADED CSV FILE IN TABLE
-=========================
+========================================
+LOADED CSV FILE IN TABLE IN BRONZE LAYER
+========================================
 Scripts purpose: 
-	this script going to loaded data from csv in each table that prepared.
+	this script going to create store procedures to loaded data from csv in each table that prepared.
 	If data exists, It will deleted and reloaded. The script loaded six data from different place
 	in each six tables we had created
+Usage Example:
+	EXEC bronze.load_bronze
 WARNING: 
 	This script will deleted all data in tables.
 	Make sure you have backups before running this script
