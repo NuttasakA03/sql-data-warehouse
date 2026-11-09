@@ -18,8 +18,7 @@ FROM silver.crm_cust_info ci
 LEFT JOIN silver.erp_cust_az12 ca
 	ON ci.cst_key = ca.cid
 LEFT JOIN silver.erp_loc_a101 la
-	ON ci.cst_key = la.cid
-GO
+	ON ci.cst_key = la.cid;
 
 -- Create product view
 CREATE VIEW gold.dim_products AS
@@ -38,8 +37,7 @@ SELECT
 FROM silver.crm_prd_info pn
 LEFT JOIN silver.erp_px_cat_g1v2 pc
 ON pn.cat_id = pc.id
-WHERE pn.prd_end_dt IS NULL -- Filter out all historical data
-GO
+WHERE pn.prd_end_dt IS NULL; -- Filter out all historical data
 
 -- Create order view
 CREATE VIEW gold.fact_sales AS
@@ -57,4 +55,4 @@ FROM silver.crm_sales_details sd
 LEFT JOIN gold.dim_products pr
 	ON sd.sls_prd_key = pr.product_number
 LEFT JOIN gold.dim_customers ct
-	ON sd.sls_cust_id = ct.customer_id
+	ON sd.sls_cust_id = ct.customer_id;

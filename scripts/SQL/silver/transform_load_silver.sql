@@ -55,8 +55,8 @@ BEGIN
 			TRIM(cst_firstname) cst_firstname,
 			TRIM(cst_lastname) cst_lastname,
 			CASE 
-				WHEN UPPER(cst_material_status) = 'S' THEN 'Single' 
-				WHEN UPPER(cst_material_status) = 'M' THEN 'Married' 
+				WHEN UPPER(cst_marital_status) = 'S' THEN 'Single' 
+				WHEN UPPER(cst_marital_status) = 'M' THEN 'Married' 
 				ELSE 'n/a'
 			END cst_marital_status,
 			CASE 
@@ -132,7 +132,7 @@ BEGIN
 		)
 
 		SELECT
-			sls_ord_number,
+			sls_ord_num,
 			sls_prd_key,
 			sls_cust_id,
 			CASE
@@ -186,8 +186,8 @@ BEGIN
 			CASE WHEN cid LIKE 'NAS%' THEN SUBSTRING(cid, 4, LEN(cid)) ELSE cid END cid,
 			CASE WHEN bdate > GETDATE() THEN NULL ELSE bdate END bdate,
 			CASE 
-				WHEN UPPER(TRIM(gndr)) IN ('F', 'Female') THEN 'Female'
-				WHEN UPPER(TRIM(gndr)) IN ('M', 'Male') THEN 'Male'
+				WHEN UPPER(TRIM(gen)) IN ('F', 'Female') THEN 'Female'
+				WHEN UPPER(TRIM(gen)) IN ('M', 'Male') THEN 'Male'
 				ELSE 'n/a'
 			END gndr
 		FROM bronze.erp_cust_az12
