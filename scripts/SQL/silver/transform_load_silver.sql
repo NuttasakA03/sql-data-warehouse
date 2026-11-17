@@ -66,7 +66,7 @@ BEGIN
 			END cst_gndr,
 			cst_create_date
 		FROM sub1
-		WHERE flag_last = 1;
+		WHERE flag_last = 1
 	
 		SET @end_time = GETDATE()
 		PRINT '>> Load Duration: ' + CAST(DATEDIFF(second, @start_time, @end_time) AS NVARCHAR) + ' seconds'
