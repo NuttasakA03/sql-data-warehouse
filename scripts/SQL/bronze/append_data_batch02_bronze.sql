@@ -9,7 +9,7 @@
 */
 
 -- Create Store Procedure
-CREATE OR ALTER PROCEDURE bronze.append_bronze AS
+CREATE OR ALTER PROCEDURE bronze.append_bronze_02 AS
 BEGIN
 	-- Setup Value for Calculate	
 	DECLARE @start_time DATETIME, @end_time DATETIME, @start_whole_time DATETIME, @end_whole_time DATETIME, @cnt INT
@@ -32,14 +32,12 @@ BEGIN
 		SET @start_whole_time = GETDATE()
 		SET @start_time = GETDATE()
 		
-		PRINT 'Create temp cust_info'
 		IF OBJECT_ID('tempdb..#cust_info') IS NOT NULL
 			DROP TABLE #cust_info
 		CREATE TABLE #cust_info (
 			cst_id INT, cst_key NVARCHAR(50), cst_firstname NVARCHAR(50), cst_lastname NVARCHAR(50)
 			,cst_marital_status NVARCHAR(50), cst_gndr NVARCHAR(50), cst_create_date DATE
 		)
-		PRINT 'Successful'
 		
 		IF OBJECT_ID('tempdb..#prd_info') IS NOT NULL
 			DROP TABLE #prd_info
@@ -101,7 +99,7 @@ BEGIN
 		PRINT '--------------------------------'
 		
 		BULK INSERT #cust_info
-		FROM '/tmp/datasets/incremental/batch_01/source_crm/cust_info.csv'
+		FROM '/tmp/datasets/incremental/batch_02/source_crm/cust_info.csv'
 		WITH (
 			FIRSTROW = 2, 
 			FIELDTERMINATOR = ',', 
@@ -123,7 +121,7 @@ BEGIN
 		SET @start_time = GETDATE()
 	
 		BULK INSERT #prd_info
-		FROM '/tmp/datasets/incremental/batch_01/source_crm/prd_info.csv'
+		FROM '/tmp/datasets/incremental/batch_02/source_crm/prd_info.csv'
 		WITH (
 			FIRSTROW = 2,
 			FIELDTERMINATOR = ',',
@@ -146,7 +144,7 @@ BEGIN
 		SET @start_time = GETDATE()
 			
 		BULK INSERT #sales_details
-		FROM '/tmp/datasets/incremental/batch_01/source_crm/sales_details.csv'
+		FROM '/tmp/datasets/incremental/batch_02/source_crm/sales_details.csv'
 		WITH (
 			FIRSTROW = 2,
 			FIELDTERMINATOR = ',',
@@ -169,7 +167,7 @@ BEGIN
 		SET @start_time = GETDATE()
 		
 		BULK INSERT #cust_az12
-		FROM '/tmp/datasets/incremental/batch_01/source_erp/CUST_AZ12.csv'
+		FROM '/tmp/datasets/incremental/batch_02/source_erp/CUST_AZ12.csv'
 		WITH (
 			FIRSTROW = 2,
 			FIELDTERMINATOR = ',',
@@ -191,7 +189,7 @@ BEGIN
 		SET @start_time = GETDATE()
 		
 		BULK INSERT #loc_a101
-		FROM '/tmp/datasets/incremental/batch_01/source_erp/LOC_A101.csv'
+		FROM '/tmp/datasets/incremental/batch_02/source_erp/LOC_A101.csv'
 		WITH (
 			FIRSTROW = 2,
 			FIELDTERMINATOR = ',',
@@ -213,7 +211,7 @@ BEGIN
 		SET @start_time = GETDATE()
 		
 		BULK INSERT #px_cat_g1v2
-		FROM '/tmp/datasets/incremental/batch_01/source_erp/PX_CAT_G1V2.csv'
+		FROM '/tmp/datasets/incremental/batch_02/source_erp/PX_CAT_G1V2.csv'
 		WITH (
 			FIRSTROW = 2,
 			FIELDTERMINATOR = ',',
@@ -253,7 +251,7 @@ BEGIN
 			
 		SELECT 
 			*,
-			'batch_01/source_crm/cust_info.csv'
+			'batch_02/source_crm/cust_info.csv'
 		FROM #cust_info
 		
 		--Count the output into append_results
@@ -283,7 +281,7 @@ BEGIN
 		)
 		SELECT
 			*,
-			'batch_01/source_crm/prd_info.csv'
+			'batch_02/source_crm/prd_info.csv'
 		FROM #prd_info
 		
 		SET @rows_inserted = @@ROWCOUNT
@@ -315,7 +313,7 @@ BEGIN
 		)
 		SELECT 
 			*,
-			'batch_01/source_crm/sales_details.csv'
+			'batch_02/source_crm/sales_details.csv'
 		FROM #sales_details
 		
 		SET @rows_inserted = @@ROWCOUNT
@@ -341,7 +339,7 @@ BEGIN
 		
 		SELECT 
 			*,
-			'batch_01/source_erp/CUST_AZ12.csv'
+			'batch_02/source_erp/CUST_AZ12.csv'
 		FROM #cust_az12
 		
 		--Count the output into append_results
@@ -367,7 +365,7 @@ BEGIN
 		
 		SELECT 
 			*,
-			'batch_01/source_erp/LOC_A101.csv'
+			'batch_02/source_erp/LOC_A101.csv'
 		FROM #loc_a101
 		
 		--Count the output into append_results
@@ -395,7 +393,7 @@ BEGIN
 		
 		SELECT 
 			*,
-			'batch_01/source_erp/PX_CAT_G1V2.csv'
+			'batch_02/source_erp/PX_CAT_G1V2.csv'
 		FROM #px_cat_g1v2
 		
 		--Count the output into append_results
